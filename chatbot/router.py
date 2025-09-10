@@ -32,7 +32,7 @@ def route(message: str) -> Dict:
     msg = message.strip()
     name = find_name_in_text(msg)
     
-    # 1) H2H
+    # hitvspit
     if "vs" in msg or "맞대결" in msg:
         m = re.search(r"([A-Za-z가-힣]+)\s+(\S+)\s+vs\s+([A-Za-z가-힣]+)\s+(\S+)", msg, re.IGNORECASE)
         if m:
@@ -41,11 +41,11 @@ def route(message: str) -> Dict:
             h_team = _teamcode(t2)
             return {"tool":"h2h", "p_team":p_team, "p_name":p_name, "h_team":h_team, "h_name":h_name}
 
-    # 2) 팀 요약 키워드
+    # 팀 요약
     if any(k in msg for k in ["롯데 성적","순위","승률","최근10","연속","홈","방문","팀 성적","팀 요약"]):
         return {"tool":"team_summary"}
 
-    # 3) 선수 요약 (라벨만 지정; 실제 타입은 상위에서 get_info로 판단)
+    # 선수 요약 
     if name:
         # 이름은 상위에서 CSV로 판별
         return {"tool":"player_summary", "name": name}
