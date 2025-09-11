@@ -1,6 +1,6 @@
 import sys
 from .router import route
-from .handlers import handle_player_summary, handle_team_summary, handle_h2h, handle_player_stat, handle_team_stat, handle_team_vs_all
+from .handlers import handle_player_summary, handle_team_summary, handle_h2h, handle_player_stat, handle_team_stat, handle_team_vs_all, handle_good_games
 from crawler.fetch import Fetcher
 
 def main():
@@ -32,6 +32,8 @@ def main():
             handle_team_vs_all(r, fetcher)
         elif tool == "h2h":
             handle_h2h(r, fetcher)
+        elif tool == "good_games":
+            handle_good_games()
         else:
             print("[?] 이해하지 못했어요. 예) '롯데 순위', '전민재 요약', '윤동희 OPS', '롯데 감보아 vs LG 문보경'")
 

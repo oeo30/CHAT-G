@@ -29,6 +29,10 @@ def route(message: str) -> Dict:
             h_team = _teamcode(t2)
             return {"tool":"h2h", "p_team":p_team, "p_name":p_name, "h_team":h_team, "h_name":h_name}
 
+    if "재밌는" in msg or "재밌었던" in msg:
+        return {"tool":"good_games"}
+
+
     # --- 팀 요약 ---
     for k, code in TEAM_MAP.items():
         if k in msg:
@@ -56,4 +60,6 @@ def route(message: str) -> Dict:
 
         return {"tool":"player_summary", "name": name}
 
+    
+        
     return {"tool":"unknown"}
