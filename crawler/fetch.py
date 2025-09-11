@@ -33,13 +33,13 @@ if __name__ == "__main__": #테스트코드
 
     f = Fetcher()
 
-    # player_id, type = get_info("손호영")
-    # if type == "hitter":
-    #     data = fetch_hitter(player_id, f)
+    player_id, type = get_info("손호영")
+    if type == "hitter":
+         data = fetch_hitter(player_id, f)
     # elif type == "pitcher":
     #     data = fetch_pitcher(player_id, f)
 
-    data = fetch_hitvspit("LT", "박세웅", "LG", "문보경", f)
+   # data = fetch_hitvspit("LT", "박세웅", "LG", "문보경", f)
     print(data)
 
     #json 파일로 결과 저장

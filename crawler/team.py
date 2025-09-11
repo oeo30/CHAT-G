@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup #HTML 파싱
 from typing import Dict, Any
 from .fetch import Fetcher 
+from chatbot.constants import TEAM_HEADERS
 
 TEAM_URL = "https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx"
 VS_PANEL_ID = "#cphContents_cphContents_cphContents_pnlVsTeam"
-TEAM_HEADERS = ["순위","팀명","경기","승","패","무","승률","게임차","최근10경기","연속","홈","방문"]
+
 
 def fetch_team(fetcher: Fetcher):
     html = fetcher.get(TEAM_URL)

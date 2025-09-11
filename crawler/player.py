@@ -1,14 +1,12 @@
 from bs4 import BeautifulSoup #HTML 파싱
 from typing import Dict, Any
 from .fetch import Fetcher 
+from chatbot.constants import PITCHER_HEADERS, HITTER_HEADERS
 
 BASE = "https://www.koreabaseball.com/Record"
 PITCHER_URL = f"{BASE}/Player/PitcherDetail/Basic.aspx?"
 HITTER_URL = f"{BASE}/Player/HitterDetail/Basic.aspx?"
-
 PROFILE_PANEL_ID = "#cphContents_cphContents_cphContents_playerProfile"
-PITCHER_HEADERS = ["ERA","G","CG","SHO","W","L","SV","HLD","WPCT","TBF","NP","IP","H","2B","3B","HR","SAC","SF","BB","IBB","SO","WP","BK","R","ER","BSV","WHIP","AVG","QS"]
-HITTER_HEADERS = ["AVG", "G", "PA", "AB", "R", "H", "2B", "3B", "HR", "TB", "RBI", "SB", "CS", "SAC", "SF", "BB", "IBB", "HBP", "SO", "GDP", "SLG", "OBP", "E", "SB%", "MH", "OPS", "RISP", "PH-BA"]
 
 def fetch_pitcher(player_id: str, fetcher: Fetcher): #투수 정보 크롤링
     html = fetcher.get(PITCHER_URL, params={"playerID": player_id})
@@ -16,14 +14,14 @@ def fetch_pitcher(player_id: str, fetcher: Fetcher): #투수 정보 크롤링
 
     profile = {
         "player_id": player_id,
-        "name": soup.select_one(f"{PROFILE_PANEL_ID}_lblName").get_text(), #CSS 셀렉터로 기본 정보 추출
-        "number": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
-        "birthday": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),   
-        "position": soup.select_one(f"{PROFILE_PANEL_ID}_lblPosition").get_text(),
-        "body": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
-        "career": soup.select_one(f"{PROFILE_PANEL_ID}_lblCareer").get_text(),
-        'salary': soup.select_one(f"{PROFILE_PANEL_ID}_lblSalary").get_text(),
-        "draft": soup.select_one(f"{PROFILE_PANEL_ID}_lblDraft").get_text()
+        "이름": soup.select_one(f"{PROFILE_PANEL_ID}_lblName").get_text(), #CSS 셀렉터로 기본 정보 추출
+        "등번호": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
+        "생년월일": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),   
+        "포지션": soup.select_one(f"{PROFILE_PANEL_ID}_lblPosition").get_text(),
+        "신체": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
+        "경력": soup.select_one(f"{PROFILE_PANEL_ID}_lblCareer").get_text(),
+        '연봉': soup.select_one(f"{PROFILE_PANEL_ID}_lblSalary").get_text(),
+        "드래프트": soup.select_one(f"{PROFILE_PANEL_ID}_lblDraft").get_text()
     }
 
     tables = soup.select("div.tbl-type02 table.tbl.tt")
@@ -50,15 +48,15 @@ def fetch_hitter(player_id: str, fetcher: Fetcher): #타자 정보 크롤링
     soup = BeautifulSoup(html, "lxml")
 
     profile = {
-        "player_id": player_id,
-        "name": soup.select_one(f"{PROFILE_PANEL_ID}_lblName").get_text(), #CSS 셀렉터로 기본 정보 추출
-        "number": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
-        "birthday": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),
-        "position": soup.select_one(f"{PROFILE_PANEL_ID}_lblPosition").get_text(),
-        "body": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
-        "career": soup.select_one(f"{PROFILE_PANEL_ID}_lblCareer").get_text(),
-        'salary': soup.select_one(f"{PROFILE_PANEL_ID}_lblSalary").get_text(),
-        "draft": soup.select_one(f"{PROFILE_PANEL_ID}_lblDraft").get_text()
+        "id": player_id,
+        "이름": soup.select_one(f"{PROFILE_PANEL_ID}_lblName").get_text(), #CSS 셀렉터로 기본 정보 추출
+        "등번호": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
+        "생년월일": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),
+        "포지션": soup.select_one(f"{PROFILE_PANEL_ID}_lblPosition").get_text(),
+        "신제": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
+        "경력": soup.select_one(f"{PROFILE_PANEL_ID}_lblCareer").get_text(),
+        '연봉': soup.select_one(f"{PROFILE_PANEL_ID}_lblSalary").get_text(),
+        "드래프트": soup.select_one(f"{PROFILE_PANEL_ID}_lblDraft").get_text()
     }
 
     tables = soup.select("div.tbl-type02 table.tbl.tt")
