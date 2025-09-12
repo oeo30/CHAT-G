@@ -44,7 +44,7 @@ def choose_player_value(soup, dropdown_name, player_name) -> str:
             return opt.get("value","0")
     return "0"
 
-def fetch_hitvspit(p_team: str, p_name: str, h_team: str, h_name: str, fetcher: Fetcher) -> Dict[str, Any]:
+def fetch_h2h(p_team: str, p_name: str, h_team: str, h_name: str, fetcher: Fetcher) -> Dict[str, Any]:
     html = fetcher.get(URL)
     soup = BeautifulSoup(html, "lxml")
 

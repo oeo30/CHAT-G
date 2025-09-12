@@ -7,10 +7,10 @@ TEAM_URL = "https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx"
 VS_PANEL_ID = "#cphContents_cphContents_cphContents_pnlVsTeam"
 
 
-def fetch_team(fetcher: Fetcher):
+def fetch_team(teamcode: str, fetcher: Fetcher):
     html = fetcher.get(TEAM_URL)
     soup = BeautifulSoup(html, "lxml")
-    team = "롯데"
+    team = teamcode
 
     #팀 순위 데이터 추출
     rank_table = soup.select_one("table.tData")

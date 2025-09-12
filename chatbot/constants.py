@@ -1,6 +1,9 @@
-from typing import Literal
+import pandas as pd
+df = pd.read_csv("crawler/playerid.csv")
 
-TeamCode = Literal["LG","HH","SK","SS","KT","LT","NC","HT","OB","WO"]
+ALL_NAMES = df["name"].tolist()
+
+
 
 PITCHER_HEADERS = [
     "ERA","G","CG","SHO","W","L","SV","HLD","WPCT","TBF","NP","IP","H",
@@ -16,17 +19,30 @@ HITTER_HEADERS = [
 
 TEAM_HEADERS = ["순위","팀명","경기","승","패","무","승률","게임차","최근10경기","연속","홈","방문"]
 
-TEAM_MAP = {
-    "LG":"LG","엘지":"LG",
-    "한화":"HH",
-    "SSG":"SK","쓱":"SK",
-    "삼성":"SS",
-    "KT":"KT","케이티":"KT",
-    "롯데":"LT","자이언츠":"LT",
-    "KIA":"HT","기아":"HT",
-    "NC":"NC","엔씨":"NC",
-    "두산":"OB",
-    "키움":"WO"
+TEAM_NAME_MAP = {    
+    "LG":"LG","엘지":"LG","LG트윈스":"LG",
+    "한화":"한화","한화이글스":"한화",
+    "SSG":"SSG","쓱":"SSG","SSG랜더스":"SSG",
+    "삼성":"삼성","삼성라이온즈":"삼성",
+    "KT":"KT","케이티":"KT","KT위즈":"KT",
+    "롯데":"롯데","자이언츠":"롯데","롯데자이언츠":"롯데","우리팀":"롯데",
+    "KIA":"KIA","기아":"KIA","타이거즈":"KIA","기아타이거즈":"KIA",
+    "NC":"NC","엔씨":"NC","NC다이노스":"NC",
+    "두산":"두산","두산베어스":"두산",
+    "키움":"키움","키움히어로즈":"키움"
+    }
+
+TEAM_CODE_MAP = {
+    "LG":"LG","엘지":"LG","LG트윈스":"LG",
+    "한화":"HH","한화이글스":"HH",
+    "SSG":"SK","쓱":"SK","SSG랜더스":"SK",
+    "삼성":"SS","삼성라이온즈":"SS",
+    "KT":"KT","케이티":"KT","KT위즈":"KT",
+    "롯데":"LT","자이언츠":"LT","롯데자이언츠":"LT",
+    "KIA":"HT","기아":"HT","타이거즈":"HT","기아타이거즈":"HT",
+    "NC":"NC","엔씨":"NC","NC다이노스":"NC",
+    "두산":"OB","두산베어스":"OB",
+    "키움":"WO","키움히어로즈":"WO"
 }
 
 STAT_ALIASES = {
@@ -99,8 +115,7 @@ STAT_ALIASES = {
     "피안타율": "AVG",
     "퀄리티스타트": "QS",
 
-
-    #팀
+    # 팀
     "순위": "순위", "팀 순위": "순위",
     "승": "승",
     "패": "패",
