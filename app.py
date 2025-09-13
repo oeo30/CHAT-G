@@ -18,44 +18,13 @@ from app.streamlit_handlers import (
     handle_good_games_streamlit
 )
 
-# 커스텀 CSS 스타일
-st.markdown("""
-<style>
-    @font-face {
-    font-family: 'Giants';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Giants/Giants-Regular.ttf') format('truetype');
-    }
-            
-    @font-face {
-    font-family: 'Giants Inline';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GiantsInline/GiantsInline.ttf') format('truetype');
-    }
-    
-    /* 전체 배경색 */
-    .stApp {
-        background-color: #f0f2f6;
-        font-family: 'Giants';
-    }
-    
-    /* 채팅 메시지 스타일 */
-    .stChatMessage {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    /* 제목 스타일 */
-    h1 {
-        font-family: 'Giants Inline' !important;
-        color: #1976d2;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        font-size: 3rem;
-        font-weight: normal;
-    }
-    
-</style>
-""", unsafe_allow_html=True)
+# CSS 파일 로드
+def load_css():
+    with open('app/styles.css', 'r', encoding='utf-8') as f:
+        return f.read()
+
+st.markdown(f"<style>{load_css()}</style>", unsafe_allow_html=True)
+
 
 st.title("CHAT-G")
 st.caption("2025시즌 롯데 자이언츠 스탯 챗봇")

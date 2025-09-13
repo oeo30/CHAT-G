@@ -13,7 +13,7 @@ def fetch_pitcher(player_id: str, fetcher: Fetcher): #투수 정보 크롤링
     soup = BeautifulSoup(html, "lxml")
 
     profile = {
-        "player_id": player_id,
+        "id": player_id,
         "이름": soup.select_one(f"{PROFILE_PANEL_ID}_lblName").get_text(), #CSS 셀렉터로 기본 정보 추출
         "등번호": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
         "생년월일": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),   
