@@ -9,7 +9,7 @@ def main():
 
     while True:
         msg = input("Q: ").strip()
-        if not msg or msg.lower() in ("q","quit"):
+        if msg.lower() in ("q","quit"):
             print("프로그램을 종료합니다")
             break
 
@@ -31,7 +31,7 @@ def main():
         elif tool == "good_games":
             handle_good_games()
         else:
-            print("[?] 이해하지 못했어요. 예) 롯데 순위, 전민재 요약, 윤동희 OPS, 롯데 감보아 vs LG 문보경")
+            print("[?] 이해하지 못했어요. 예) 롯데 순위, 전민재 요약, 윤동희 OPS, 롯데 이민석 vs 두산 김민석")
 
 if __name__ == "__main__":
     sys.exit(main())
