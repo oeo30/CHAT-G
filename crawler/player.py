@@ -53,7 +53,7 @@ def fetch_hitter(player_id: str, fetcher: Fetcher): #타자 정보 크롤링
         "등번호": soup.select_one(f"{PROFILE_PANEL_ID}_lblBackNo").get_text(),
         "생년월일": soup.select_one(f"{PROFILE_PANEL_ID}_lblBirthday").get_text(),
         "포지션": soup.select_one(f"{PROFILE_PANEL_ID}_lblPosition").get_text(),
-        "신제": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
+        "신체": soup.select_one(f"{PROFILE_PANEL_ID}_lblHeightWeight").get_text(),
         "경력": soup.select_one(f"{PROFILE_PANEL_ID}_lblCareer").get_text(),
         '연봉': soup.select_one(f"{PROFILE_PANEL_ID}_lblSalary").get_text(),
         "드래프트": soup.select_one(f"{PROFILE_PANEL_ID}_lblDraft").get_text()
