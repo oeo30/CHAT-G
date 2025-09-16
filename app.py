@@ -27,7 +27,7 @@ st.markdown(f"<style>{load_css()}</style>", unsafe_allow_html=True)
 
 
 st.title("CHAT-G")
-st.caption("2025시즌 롯데 자이언츠 스탯 챗봇")
+st.caption("2025 시즌 롯데 자이언츠 스탯 챗봇")
 
 # Fetcher 초기화
 @st.cache_resource
