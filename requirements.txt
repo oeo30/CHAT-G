@@ -1,7 +1,4 @@
 beautifulsoup4==4.13.5
 pandas==2.3.2
 Requests==2.32.5
-lxml
-json
-streamlit
-python-dotenv
+streamlit==1.49.1

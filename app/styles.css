@@ -1,329 +1,220 @@
 /* =========================
    0) 폰트 로드
    ========================= */
-@font-face{
-  font-family:'Giants';
-  src:url('https://cdn.jsdelivr.net/gh/fonts-archive/Giants/Giants-Regular.ttf') format('truetype');
-  font-weight:400; font-style:normal; font-display:swap;
-}
-@font-face{
-  font-family:'Giants Inline';
-  src:url('https://cdn.jsdelivr.net/gh/fonts-archive/GiantsInline/GiantsInline.ttf') format('truetype');
-  font-weight:400; font-style:normal; font-display:swap;
-}
-
-/* =========================
-   1) 색상/공통 변수
-   ========================= */
-:root{
-  --bg:#f0f2f6;          /* 전체 배경 */
-  --bubble-user:#cad6ec; /* 유저 버블 */
-  --bubble-bot:#f0f2f6;  /* 봇 버블 */
-  --primary:#022345;     /* 포인트 */
-  --border:#e3e6eb;      /* 경계선 */
-}
-
-/* =========================
-   2) 전역 베이스 + 컨테이너 배경 통일
-   ========================= */
-html, body, .stApp{
-  background:var(--bg) !important;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-body, p, div, span, label, input, textarea, button{
-  font-family:'Giants',system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif !important;
-}
-h1, h2, h3,
-[data-testid="stMarkdownContainer"] h1,
-[data-testid="stMarkdownContainer"] h2,
-[data-testid="stMarkdownContainer"] h3{
-  font-family:'Giants Inline','Giants',sans-serif !important;
-  color:var(--primary);
-  text-align:center;
-}
-
-/* 상단/본문/하단 모든 래퍼 배경 회색으로 */
-.stApp,
-[data-testid="stAppViewContainer"],
-[data-testid="stHeader"],
-[data-testid="stToolbar"],
-[data-testid="stMainBlockContainer"],
-.block-container,
-[data-testid="stAppScrollToBottomContainer"],
-[data-testid="stBottom"],
-[data-testid="stBottomBlockContainer"],
-[data-testid="stBottomBlockContainer"] > div{
-  background-color:var(--bg) !important;
-  box-shadow:none !important;
-}
-
-/* 상단 메뉴/배포 버튼 숨김 */
-#MainMenu,
-[data-testid="stToolbar"],
-[data-testid="stAppDeployButton"]{ display:none !important; }
-
-/* =========================
-   3) 채팅 메시지 버블
-   ========================= */
-[data-testid="stChatMessage"]{
-  border-radius:14px !important;
-  padding:12px 14px !important;
-  border:1px solid var(--border);
-  box-shadow:0 1px 0 rgba(0,0,0,.02);
-}
-[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]){
-  background:var(--bubble-bot) !important;
-}
-[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]){
-  background:var(--bubble-user) !important;
-}
-
-/* =========================
-   4) 하단 입력 영역(양옆 흰색 제거)
-   ========================= */
-[data-testid="stChatInput"]{
-  width:100% !important;
-  background:transparent !important;
-  padding:0 16px 16px !important;      /* 좌우 적당한 여백 */
-  box-sizing:border-box !important;
-}
-[data-testid="stChatInput"] > div{
-  background:var(--bg) !important;      /* 래퍼 배경 회색 */
-  display:grid !important;
-  grid-template-columns:1fr auto !important; /* 입력창 + 버튼 */
-  align-items:center !important;
-  gap:12px !important;
-}
-
-/* 안내 텍스트(있으면) 숨김 */
-[data-testid="stChatInput"] [data-testid="InputInstructions"]{ display:none !important; }
-
-/* 입력창(흰색 유지) */
-[data-testid="stChatInputTextArea"],
-[data-testid="stChatInput"] textarea{
-  background:#fff !important;
-  border:1px solid var(--border) !important;
-  border-radius:12px !important;
-  padding:12px 14px !important;
-  box-shadow:none !important;
-  width:100% !important;
-}
-
-/* 전송 버튼(배경=primary, 아이콘=흰색) */
-[data-testid="stChatInputSubmitButton"]{
-  border:none !important;
-  border-radius:12px !important;
-  background:var(--primary) !important;
-  color:#fff !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-}
-[data-testid="stChatInputSubmitButton"] svg,
-[data-testid="stChatInputSubmitButton"] svg path{
-  fill:#fff !important;
-  color:#fff !important;
-}
-
-/* ===== 입력창 양옆 흰 띠 제거 (부모 div 포함) ===== */
-
-/* stBottom 안쪽의 모든 wrapper를 회색으로 */
-[data-testid="stBottom"],
-[data-testid="stBottom"] > div,
-[data-testid="stBottomBlockContainer"],
-[data-testid="stBottomBlockContainer"] > div,
-[data-testid="stBottomBlockContainer"] > div > div {
-  background-color: var(--bg) !important;
-}
-
-/* ChatInput을 가로 전체 차지하도록 */
-[data-testid="stChatInput"] {
-  width: 100% !important;
-  margin: 0 auto !important;
-  background: transparent !important;
-}
-/* ===== 전송 버튼 ↔ 입력창 높이 정밀 정렬 ===== */
-:root { --input-h: 48px; }  /* 원하는 높이로 조절(44~56px 사이 추천) */
-
-/* ChatInput 레이아웃: 입력 1fr + 버튼 auto */
-[data-testid="stChatInput"] > div{
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  align-items: center !important;      /* 세로 중앙 정렬 */
-  gap: 12px !important;
-}
-
-/* Base Web 래퍼 높이 고정 */
-[data-testid="stChatInput"] [data-baseweb="base-input"]{
-  height: var(--input-h) !important;
-  box-sizing: border-box !important;
-}
-
-/* 텍스트 영역 높이/라인 높이 통일 */
-[data-testid="stChatInputTextArea"],
-[data-testid="stChatInput"] textarea{
-  height: var(--input-h) !important;
-  min-height: var(--input-h) !important;
-  line-height: calc(var(--input-h) - 24px) !important; /* 패딩 12px*2 감안 */
-  padding: 12px 14px !important;
-  resize: none !important;
-  box-sizing: border-box !important;
-  margin: 0 !important;
-}
-
-/* 전송 버튼을 동일 높이/정사각 + 원형으로 */
-[data-testid="stChatInputSubmitButton"]{
-  width: var(--input-h) !important;
-  height: var(--input-h) !important;
-  min-width: var(--input-h) !important;
-  min-height: var(--input-h) !important;
-  border-radius: calc(var(--input-h) / 2) !important;  /* 완전 원형 */
-  margin: 0 !important;
-  align-self: center !important;  /* 그리드 세로 중앙 */
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: var(--primary) !important;
-  color: #fff !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 아이콘은 항상 흰색 */
-[data-testid="stChatInputSubmitButton"] svg,
-[data-testid="stChatInputSubmitButton"] svg path{
-  fill:#fff !important;
-  color:#fff !important;
-}
-/* ===== 캡션 중앙 정렬 & 스타일 ===== */
-[data-testid="stCaptionContainer"] p {
-    text-align: center !important;
-    font-size: 0.9rem !important;     /* 살짝 작은 글씨 */
-    color: #555 !important;           /* 기본보다 어두운 회색 */
-    margin: 0.5rem 0 1rem 0 !important;
+   @font-face {
+    font-family: 'Giants';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Giants/Giants-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Giants Inline';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GiantsInline/GiantsInline.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
   }
   
-
-  /* === Chat bar를 '하나의 흰색 캡슐'로 만들기 === */
-/* 1) 래퍼(입력+버튼 전체)를 흰색 캡슐로 */
-:root { --input-h: 48px; }
-
-[data-testid="stChatInput"] > div {
-  display: grid !important;
-  grid-template-columns: 1fr auto !important; /* 입력 1fr + 버튼 auto */
-  align-items: center !important;
-  gap: 0 !important;                 /* 중간 틈 없애기 */
-  background: #fff !important;       /* ← 캡슐 전체 흰색 */
-  border: 3px solid var(--border) !important;  /* 바깥 테두리(빨간테두리 쓰고 싶으면 여기 색 바꿔) */
-  border-radius: 9999px !important;  /* 완전 캡슐 형태 */
-  height: var(--input-h) !important;
-  min-height: var(--input-h) !important;
-  padding: 0 6px 0 0 !important;     /* 버튼쪽 살짝 여유 */
-  overflow: hidden !important;       /* 모서리 밖 삐져나오는 것 컷 */
-}
-
-/* 2) 내부 base-input/textarea는 투명 처리 (배경은 래퍼가 담당) */
-[data-testid="stChatInput"] [data-baseweb="base-input"]{
-  background: transparent !important;
-  border: none !important;
-  height: var(--input-h) !important;
-  box-sizing: border-box !important;
-}
-[data-testid="stChatInputTextArea"],
-[data-testid="stChatInput"] textarea{
-  background: transparent !important;  /* ← 투명 */
-  border: none !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  line-height: calc(var(--input-h) - 24px) !important; /* 패딩 12*2 고려 */
-  padding: 12px 14px !important;
-  margin: 0 !important;
-  resize: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* 3) 전송 버튼은 캡슐 위에 얹히되, 정렬/색 유지 */
-[data-testid="stChatInputSubmitButton"]{
-  width: var(--input-h) !important;
-  height: var(--input-h) !important;
-  min-width: var(--input-h) !important;
-  min-height: var(--input-h) !important;
-  border-radius: calc(var(--input-h)/2) !important; /* 동그란 버튼 유지 */
-  margin: 0 !important;
-  align-self: center !important;
-  background: var(--primary) !important;
-  color: #fff !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-[data-testid="stChatInputSubmitButton"] svg,
-[data-testid="stChatInputSubmitButton"] svg path{
-  fill:#fff !important;
-  color:#fff !important;
-}
-
-/* 유저 아이콘을 이미지로 교체 */
-[data-testid="stChatMessageAvatarUser"] {
-    background: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA1MDhfNTYg%2FMDAxNjgzNTM4MTg2ODY5.QCqpe6m2oCzyuIvTFM8TeCDlpuTkYFrbX3faQOS13N0g.t9-fl_r-9wrwUctyev7xJ2GO9VSPZF9FxsWe42UqHjog.JPEG.kjae1214%2F1683528916944.jpg&type=sc960_832") center/cover no-repeat !important;
+  /* =========================
+     1) 색상/공통 변수
+     ========================= */
+  :root {
+    --bg: #f0f2f6;          /* 전체 배경 */
+    --bubble-user: #cad6ec; /* 유저 버블 */
+    --bubble-bot: #f0f2f6;  /* 봇 버블 */
+    --primary: #022345;     /* 포인트 */
+    --border: #e3e6eb;      /* 경계선 */
+    --input-h: 48px;        /* 입력창 높이 */
+  }
+  
+  /* =========================
+     2) 전역 스타일 + 컨테이너 배경 통일
+     ========================= */
+  html, body, .stApp {
+    background: var(--bg) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body, p, div, span, label, input, textarea, button {
+    font-family: 'Giants', system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Arial, sans-serif !important;
+  }
+  
+  h1, h2, h3,
+  [data-testid="stMarkdownContainer"] h1,
+  [data-testid="stMarkdownContainer"] h2,
+  [data-testid="stMarkdownContainer"] h3 {
+    font-family: 'Giants Inline', 'Giants', sans-serif !important;
+    color: var(--primary);
+    text-align: center;
+  }
+  
+  /* 모든 래퍼 배경 통일 및 그림자 제거 */
+  .stApp,
+  [data-testid="stAppViewContainer"],
+  [data-testid="stHeader"],
+  [data-testid="stToolbar"],
+  [data-testid="stMainBlockContainer"],
+  .block-container,
+  [data-testid="stAppScrollToBottomContainer"],
+  [data-testid="stBottom"],
+  [data-testid="stBottom"] > div,
+  [data-testid="stBottomBlockContainer"],
+  [data-testid="stBottomBlockContainer"] > div,
+  [data-testid="stBottomBlockContainer"] > div > div {
+    background-color: var(--bg) !important;
+    box-shadow: none !important;
+  }
+  
+  /* 상단 메뉴/배포 버튼 숨김 */
+  #MainMenu,
+  [data-testid="stToolbar"],
+  [data-testid="stAppDeployButton"] {
+    display: none !important;
+  }
+  
+  /* =========================
+     3) 채팅 메시지 버블
+     ========================= */
+  [data-testid="stChatMessage"] {
+    border-radius: 14px !important;
+    padding: 12px 14px !important;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 0 rgba(0,0,0,.02);
+  }
+  
+  /* 챗봇 버블 (테두리, 그림자 없음) */
+  [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+    background: var(--bubble-bot) !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* 유저 버블 (오른쪽 정렬) */
+  [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    background: var(--bubble-user) !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+    text-align: right !important;
+  }
+  
+  [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
+    text-align: right !important;
+    align-items: flex-end !important;
+  }
+  
+  /* =========================
+     4) 채팅 아바타 (아이콘)
+     ========================= */
+  [data-testid="stChatMessageAvatarAssistant"] {
+    background: url("https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi2.ruliweb.com%2Fori%2F23%2F03%2F13%2F186d8c89ae014688e.webp&type=sc960_832") center/cover no-repeat !important;
     border-radius: 50% !important;
     width: 32px !important;
     height: 32px !important;
   }
+  [data-testid="stChatMessageAvatarAssistant"] svg {
+    display: none !important;
+  }
   
-  /* 원래 svg 숨김 */
+  [data-testid="stChatMessageAvatarUser"] {
+    background: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA1MDhfNTYg%2FMDAxNjgzNTM4MTg2ODY5.QCqpe6m2oCzyuIvTFM8TeCDlpuTkYFrbX3faQOS13N0g.t9-fl_r-9wrwUctyev7xJ2GO9VSPZF9FxsWe42UqHjog.JPEG.kjae1214%2F1683528916944.jpg&type=sc960_832") center/cover no-repeat !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+  }
   [data-testid="stChatMessageAvatarUser"] svg {
     display: none !important;
   }
   
-
-
-
-[data-testid="stChatMessageAvatarAssistant"] {
-    background: url("https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi2.ruliweb.com%2Fori%2F23%2F03%2F13%2F186d8c89ae014688e.webp&type=sc960_832") 
-                center/cover no-repeat !important;
-    border-radius: 50% !important;
-    width: 32px !important;
-    height: 32px !important;
-}
-/* 챗봇 기본 svg 숨기기 */
-[data-testid="stChatMessageAvatarAssistant"] svg {
+  /* =========================
+     5) 하단 입력 영역 (흰색 캡슐 스타일)
+     ========================= */
+  /* 입력창 전체 컨테이너 */
+  [data-testid="stChatInput"] {
+    width: 100% !important;
+    background: transparent !important;
+    padding: 0 16px 16px !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+  }
+  
+  /* 캡슐 래퍼 (입력창 + 버튼) */
+  [data-testid="stChatInput"] > div {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    align-items: center !important;
+    gap: 0 !important;
+    background: #fff !important;
+    border: 3px solid var(--border) !important;
+    border-radius: 9999px !important;
+    height: var(--input-h) !important;
+    min-height: var(--input-h) !important;
+    padding: 0 6px 0 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* 입력창 안내 텍스트 숨김 */
+  [data-testid="stChatInput"] [data-testid="InputInstructions"] {
     display: none !important;
-}
-
-
-
-
-/* 유저 메시지 전체 레이아웃 오른쪽 정렬 */
-[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
-    display: flex !important;
-    flex-direction: row-reverse !important;   /* 아이콘 → 오른쪽 */
-    align-items: flex-start !important;
-    justify-content: flex-end !important;     /* 전체를 오른쪽 끝으로 */
-    text-align: right !important;             /* 내부 텍스트도 오른쪽 정렬 */
-}
-
-/* 유저 아이콘 */
-[data-testid="stChatMessageAvatarUser"] {
-    background: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA1MDhfNTYg%2FMDAxNjgzNTM4MTg2ODY5.QCqpe6m2oCzyuIvTFM8TeCDlpuTkYFrbX3faQOS13N0g.t9-fl_r-9wrwUctyev7xJ2GO9VSPZF9FxsWe42UqHjog.JPEG.kjae1214%2F1683528916944.jpg&type=sc960_832") center/cover no-repeat !important;
-    border-radius: 50% !important;
-    width: 32px !important;
-    height: 32px !important;
-    margin-left: 8px !important;   /* 버블과 아이콘 간격 */
-    margin-right: 0 !important;
-}
-
-/* 유저 메시지 텍스트 오른쪽 정렬 */
-[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
-    text-align: right !important;
-    align-items: flex-end !important;
-}
-
-/* 챗봇 버블 테두리 숨기기 */
-[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
-    border: none !important;       /* 테두리 제거 */
-    box-shadow: none !important;   /* 그림자도 제거 */
-}
-
-
+  }
+  
+  /* Base Web 래퍼 (투명 처리) */
+  [data-testid="stChatInput"] [data-baseweb="base-input"] {
+    height: var(--input-h) !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  /* 실제 텍스트 입력 영역 (투명 처리) */
+  [data-testid="stChatInputTextArea"],
+  [data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    resize: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    line-height: calc(var(--input-h) - 24px) !important;
+    padding: 12px 14px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* 전송 버튼 */
+  [data-testid="stChatInputSubmitButton"] {
+    width: var(--input-h) !important;
+    height: var(--input-h) !important;
+    min-width: var(--input-h) !important;
+    min-height: var(--input-h) !important;
+    border-radius: calc(var(--input-h) / 2) !important;
+    margin: 0 !important;
+    align-self: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--primary) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* 전송 버튼 아이콘 */
+  [data-testid="stChatInputSubmitButton"] svg,
+  [data-testid="stChatInputSubmitButton"] svg path {
+    fill: #fff !important;
+    color: #fff !important;
+  }
+  
+  /* =========================
+     6) 기타 (캡션)
+     ========================= */
+  [data-testid="stCaptionContainer"] p {
+    text-align: center !important;
+    font-size: 0.9rem !important;
+    color: #555 !important;
+    margin: 0.5rem 0 1rem 0 !important;
+  }
